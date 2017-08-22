@@ -1,0 +1,21 @@
+<ng-include src="'static/partials/header.html'"></ng-include>
+<h1> Welcome {{ user.name }}!</h1>
+<div ng-show="error" class="alert alert-danger">{{errorMessage}}</div>
+<div ng-show="success" class="alert alert-success">{{successMessage}}</div>
+
+<table class="table table-hover" style="border: 1px solid #ddd;">
+    <thead>
+    <td style="width:30%"><strong>Username</strong></td>
+    <td style="width:60%"><strong>Registered</strong></td>
+    </thead>
+    <tbody>
+    <tr id="row" ng-repeat="user in users">
+        <td>
+            <span>{{user.username}}</span>
+        </td>
+        <td>
+            <span>{{user.registered_on}}</span>
+        </td>
+    </tr>
+    </tbody>
+</table>

@@ -1,0 +1,15 @@
+<ng-include src="'static/partials/header.html'"></ng-include>
+<div>
+  <h1>{{user.name}} - Verify Deck</h1>
+  <div ng-show="error" class="alert alert-danger">{{errorMessage}}</div>
+  <div ng-show="success" class="alert alert-success">{{successMessage}}</div>
+    <form class="form-signin" ng-submit="verifydeck()">
+        <div class="form-group">
+      <label for="inputCode"  class="sr-only">Verification Code</label>
+      <input type="text" class="form-control" id="inputCode"  name="inputCode" ng-model="registerForm.code" placeholder="Verification Code" required="" autofocus="" >
+    </div>
+      <div>
+        <button type="submit" class="btn btn-lg btn-primary btn-block" ng-disabled="disabled">Verify</button>
+      </div>
+  </form>
+</div>

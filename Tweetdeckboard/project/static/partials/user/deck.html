@@ -1,0 +1,28 @@
+<ng-include src="'static/partials/header.html'"></ng-include>
+<h1> Welcome {{ user.name }}!</h1>
+<div ng-show="error" class="alert alert-danger">{{errorMessage}}</div>
+<div ng-show="success" class="alert alert-success">{{successMessage}}</div>
+
+<table class="table table-hover" style="border: 1px solid #ddd;">
+    <thead>
+    <td><strong>Deck Name</strong></td>
+    <td><strong>Status</strong></td>
+    </thead>
+    <tbody>
+    <tr id="row" class=" " ng-repeat="deck in decks">
+        <td>
+            <span title="152">{{deck.name}}</span>
+        </td>
+        <td ng-if="deck.login_code == 0">
+            <font color="red">Need Verify</font>
+        </td>
+        <td ng-if="deck.login_code == 1">
+            <font color="green">Logged in </font>
+        </td>
+        <td ng-if="deck.login_code == -1">
+            <font color="red">No Logged</font>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</div>

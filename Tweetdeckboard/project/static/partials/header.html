@@ -1,0 +1,25 @@
+<div class="header">
+    <h3 class="text-muted">Tweet Board</h3>
+    <nav>
+        <ul class="nav nav-pills pull-right">
+            <li role="presentation">
+                <a ng-if="user.admin" href="#/admin/listprofile">Profile</a>
+                <a ng-if="user.deck" href="#/deck/{{user.name}}/listprofile">Profile</a>
+                <a ng-if="!user.admin && !user.deck" href="#/profile/{{user.name}}">Profile</a>
+            </li>
+            <li role="presentation">
+                <a ng-if="user.admin" href="#/admin/listdeck">Deck</a>
+                <a ng-if='user.deck'  href="#/deck/{{user.name}}/listuser">User</a>
+                <a ng-if="!user.admin && !user.deck" href="#/profile/{{user.name}}/listdeck">Deck</a>
+            </li>
+
+            <li ng-if='user.admin' role="presentation"><a href="#/admin/listuser">User</a></li>
+            <li ng-if='user.deck' role="presentation"><a href="#/deck/{{user.name}}/password">Password</a></li>
+            <li ng-if='user.admin' role="presentation"><a href="#/admin/password">Password</a></li>
+            <li ng-if='user.admin' role="presentation"><a href="#/admin/email">Email</a></li>
+            <li role="presentation" ng-controller="logoutController">
+                <a ng-click='logout()'>Logout</a>
+            </li>
+        </ul>
+    </nav>
+</div>

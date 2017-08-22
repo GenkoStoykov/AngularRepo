@@ -1,0 +1,50 @@
+<ng-include src="'static/partials/header.html'"></ng-include>
+<h1>Set Admin Email Address</h1>
+<div ng-show="error" class="alert alert-danger">{{errorMessage}}</div>
+<div ng-show="success" class="alert alert-success">{{successMessage}}</div>
+<div>
+    <div class="panel-body add" style="">
+            <form class="form-horizontal" ng-submit="setEmail()">
+                <div class="form-group">
+                    <label for="inputEmail" class="col-sm-3 control-label">Email Address</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="inputEmail" name="inputEmail"
+                               ng-model="emailForm.email"
+                               placeholder="Email Address" required="" autofocus="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputUsername" class="col-sm-3 control-label">Email Username</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="inputUsername" name="inputEmail"
+                               ng-model="emailForm.username"
+                               placeholder="Email Username" required="" autofocus="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword" class="col-sm-3 control-label">Email Password</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="inputPassword" name="inputEmail"
+                               ng-model="emailForm.password"
+                               placeholder="Email Password" required="" autofocus="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputSMTP" class="col-sm-3 control-label">SMTP Server Address</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="inputSMTP" name="inputEmail"
+                               ng-model="emailForm.smtpserver"
+                               placeholder="SMTP Server Address" required="" autofocus="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-5">
+                        <button type="submit" class="btn btn-lg btn-primary btn-block" ng-disabled="disabled">
+                            Submit Email Address
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

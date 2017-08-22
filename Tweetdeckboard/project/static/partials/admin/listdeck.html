@@ -1,0 +1,150 @@
+<ng-include src="'static/partials/header.html'"></ng-include>
+<h1> Welcome {{ user.name }}!</h1>
+<div ng-show="error" class="alert alert-danger">{{errorMessage}}</div>
+<div ng-show="success" class="alert alert-success">{{successMessage}}</div>
+<div class="panel panel-default">
+    <div class="panel-heading" ng-click="toggle()">Add New (Click to View)</div>
+    <div class="panel-body add" ng-show="state" style="">
+        <div class="row">
+            <form class="form-horizontal" ng-submit="adddeck()">
+
+                <div class="form-group">
+                    <label for="inputName" class="col-sm-3 control-label">Deck Name</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="inputName" name="inputName"
+                               ng-model="addDeckForm.name"
+                               placeholder="Name" required="" autofocus="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPass" class="col-sm-3 control-label">Deck Password</label>
+                    <div class="col-sm-5">
+                        <input type="password" class="form-control" id="inputPass" name="inputPass"
+                               ng-model="addDeckForm.password" placeholder="Password" required="" autofocus="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputUserPass" class="col-sm-3 control-label">User Password</label>
+                    <div class="col-sm-5">
+                        <input type="password" class="form-control" id="inputUserPass" name="inputPass"
+                               ng-model="addDeckForm.user_password" placeholder="User Password" required="" autofocus="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail" class="col-sm-3 control-label">Email-Address</label>
+                    <div class="col-sm-5">
+                        <input type="text" name="inputEmail" id='inputEmail' class="form-control"
+                               ng-model="addDeckForm.email" placeholder="Email-address" required="">
+                        </input>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-5">
+                        <button type="submit" class="btn btn-lg btn-primary btn-block" ng-disabled="disabled">Add Deck
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<table class="table table-hover" style="border: 1px solid #ddd;">
+    <thead>
+    <td style="width:20%"><strong>Action</strong></td>
+    <td style="width:30%"><strong>Deck Name</strong></td>
+    <td style="width:30%"><strong>Email Address</strong></td>
+    <td style="width:20%"><strong>TweetDeck Login</strong></td>
+    </thead>
+    <tbody>
+    <tr id="row" class=" " ng-repeat="deck in decks">
+        <td>
+            <!--<button type="button" class="del-btn btn btn-default btn-sm">-->
+            <!--<span class="glyphicon glyphicon-pause" id="pause_id_15359" aria-hidden="true"></span>-->
+            <!--</button>-->
+            <a href="#/deck/edit/{{deck.id}}">
+                <button type="button" class="btn btn-default btn-sm">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                </button>
+            </a>
+            <button type="button" class="del-btn btn btn-default btn-sm" ng-click="delDeck(deck.id)">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="del-btn btn btn-default btn-sm" ng-click="link_toggle($index)">
+                <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+            </button>
+        </td>
+        <td>
+            <span>{{deck.name}}</span>
+            <div class="show_user" ng-show="deck.show_user">
+
+                <table class="table table-hover" style="border: 1px solid #ddd;">
+                    <thead>
+                    <td><strong>No</strong></td>
+                    <td width="32%"><strong>Username</strong></td>
+                    <td ><strong>Registered on</strong></td>
+                    <td><strong>Linked</strong></td>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="user in filterData = (users | filter : {username: searchUser}) | limitTo:pageSize:pageSize*(currentPage-1)">
+                        <td>
+                            <span>{{$index+1}}</span>
+                        </td>
+                        <td>
+                            <span>{{user.username}}</span>
+                        </td>
+                        <td>
+                            <span>{{user.registered_on}}</span>
+                        </td>
+                        <td>
+                            <div ng-if="user.linked_decks.indexOf(deck.id) != -1">
+                                <button type="submit" class="btn btn-sm btn-success " style="width:70px"
+                                        ng-disabled="disabled" ng-click="unlinkdeck(user.id, deck.id)">Linked
+                                </button>
+                            </div>
+                            <div ng-if="user.linked_decks.indexOf(deck.id) == -1 ">
+                                <button type="submit" class="btn btn-sm btn-danger " style="width:70px"
+                                        ng-disabled="disabled" ng-click="linkdeck(user.id, deck.id)">Unlinked
+                                </button>
+                            </div>
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div  style="position: absolute;">
+                    <span class="counter">
+                        Users: {{filterData.length}}/{{users.length}}
+                    </span>
+                    <input type="search" id="filter-user" name="q" ng-model="searchUser"
+                           class="form-control width-half " placeholder="Search users…"
+                           autocomplete="off" aria-label="Search users…" data-hotkey="/" value="">
+                </div>
+                <div style="text-align:center;">
+                    <uib-pagination total-items="filterData.length" style=" margin:5px;" ng-model="currentPage"
+                        tems-per-page="itemsPerPage">
+                    </uib-pagination>
+                </div>
+            </div>
+        </td>
+        <td>
+            <span>{{deck.email_address}}</span>
+        </td>
+        <td ng-if="deck.login_code == 0">
+            <a href='/#/deck/{{deck.id}}/verify'>
+                <button type="submit" class="btn btn-sm btn-danger " style="width:80px" ng-disabled="disabled">Need Verify
+                </button>
+            </a>
+        </td>
+        <td ng-if="deck.login_code == 1">
+            <button type="submit" class="btn btn-sm btn-success " style="width:80px" ng-disabled="disabled">Logged in
+            </button>
+        </td>
+        <td ng-if="deck.login_code == -1">
+            <button type="submit" class="btn btn-sm btn-danger " style="width:80px" ng-disabled="disabled"
+                    ng-click="logindeck(deck.id)">No Logged
+            </button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</div>
