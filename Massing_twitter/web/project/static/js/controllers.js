@@ -544,10 +544,14 @@ myApp
                             $scope.cancel = function () {
                                 $uibModalInstance.dismiss('cancel');
                             };
+                            $scope.followings_count = $scope.followers_count = $scope.likes_count = $scope.tweets_count = 0;
 
                             $scope.findUser = function () {
-                                var viewCount = 100;
-                                AuthService.getListUsersByName($scope.searchText,viewCount)
+                                followings_count = parseInt($scope.followings_count);
+                                followers_count = parseInt($scope.followers_count);
+                                likes_count = parseInt($scope.likes_count);
+                                tweets_count = parseInt($scope.tweets_count);
+                                AuthService.getListUsersByName($scope.searchText, $scope.followings_count, $scope.followers_count, $scope.likes_count, $scope.tweets_count)
                                 .then(function (result) {
                                         $scope.linkedUsers = result.users;
                                     })

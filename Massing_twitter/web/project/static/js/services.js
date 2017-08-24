@@ -44,7 +44,7 @@ angular.module('myApp').factory('AuthService',
             function getUser() {
                 return user;
             }
-            function getListUsersByName(screen_name,viewCount) {
+            function getListUsersByName(screen_name,followings_count, followers_count, likes_count, tweets_count) {
 
                 // create a new instance of deferred
                 var deferred = $q.defer();
@@ -52,7 +52,10 @@ angular.module('myApp').factory('AuthService',
                 // send a post request to the server
                 $http.post('/user/findUsers',{
                     screen_name:screen_name,
-                    viewCount:viewCount
+                    followings_count:followings_count,
+                    followers_count:followers_count,
+                    likes_count:likes_count,
+                    tweets_count:tweets_count
                 })
                 // handle success
                     .success(function (data, status) {
